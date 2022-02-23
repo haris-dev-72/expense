@@ -1,0 +1,53 @@
+
+name : Name_whatever_you_want
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+
+  push:
+    branches:
+      - master
+  
+#A workflow run is made up of one or more jobs. Jobs run in parallel by default. 
+
+jobs:
+    # Here job is to build the app
+
+    build:
+        #The type of machine to run the job on. The machine can be either a GitHub-hosted runner, or a self-hosted runner.
+
+     runs-on: ubuntu-latest
+
+        #A job contains a sequence of tasks called steps. Steps can run commands, run setup tasks, or run an action in your repository, a public repository, or an action 
+     steps:
+
+            - uses: actions/checkout@v2
+            - name: Install Node.js
+              uses: actions/setup-node@v2-beta
+              with:
+                   node-version: 14
+                
+            # Yarn Installation
+            - name: GitHub Action for yarn
+              uses: Borales/actions-yarn@v2.1.0
+              with: 
+                cmd: install
+
+            - name: install yarn
+              run: sudo apt update && sudo apt install yarn
+            - name: Install Packages
+              run: sudo yarn install
+            - name: Build React App
+              run: sudo yarn build
+
+            # Deploying on Surge
+
+            - name: Install Surge
+              run: npm install -g surge
+            - name: Run surge
+              run: surge ./build http://expnse_trrkr.surge.sh/ --token ${{ secrets.expense }}
+
+
+
+  
