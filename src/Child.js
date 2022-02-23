@@ -5,6 +5,7 @@ function Child() {
   let { transactions, addTransaction } = useContext(TransactionContext);
   let [newDesc, setDesc] = useState("");
   let [newAmount, setAmount] = useState(0);
+  console.log(newDesc, newAmount);
 
   const handleAddition = (event) => {
     event.preventDefault();
@@ -89,10 +90,10 @@ function Child() {
               onChange={(ev) => setAmount(ev.target.value)}
               required
             />
+            <input className="button" type="submit" value="Add Transaction" />
           </label>
           <br />
         </form>
-        <input className="button" type="submit" value="Add Transaction" />
       </div>
     </>
   );
